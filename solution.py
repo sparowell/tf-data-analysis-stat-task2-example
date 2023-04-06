@@ -10,8 +10,9 @@ def solution(p: float, x: np.array) -> tuple:
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
     n = len(x)
-    s = np.std(x, ddof=1)
-    chi_left = chi2.ppf((1+p)/2,n-1)
-    chi_right = chi2.ppf((1-p)/2, n-1)
-    return s*((n-1)/(chi_left*6))**.5,\
-            s*((n-1)/(chi_right*6))**.5
+    alpha = 1 - p
+    s_squared = np.var(x, ddof=1)
+    chi_left = chi2.ppf((1+alpha)/2,n-1)
+    chi_right = chi2.ppf((1-alpha)/2, n-1)
+    return ((n-1)*s_squared/(chi_left*6))**.5,\
+            ((n-1)*s_squared/(chi_right*6))**.5
